@@ -29,7 +29,6 @@ export type TransformedData = {
 export type LessonProps = {
   actualText: string;
   changeFullscreen: any;
-  changeShowScoresWhileTyping: (event: any) => void;
   changeShowStrokesAs: (event: any) => void;
   changeShowStrokesAsList: (event: any) => void;
   changeShowStrokesInLesson: any;
@@ -110,7 +109,6 @@ export type LessonProps = {
 };
 
 export type FinishedProps = {
-  changeShowScoresWhileTyping: (event: any) => void;
   changeShowStrokesAs: (event: any) => void;
   changeShowStrokesAsList: (event: any) => void;
   changeShowStrokesOnMisstroke: (event: any) => void;

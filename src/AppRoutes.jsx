@@ -416,9 +416,6 @@ const AppRoutes = ({ appProps, appState, appMethods }) => {
                         appMethods.changeSpacePlacementUserSetting
                       }
                       changeStenoLayout={appMethods.changeStenoLayout}
-                      changeShowScoresWhileTyping={
-                        appMethods.changeShowScoresWhileTyping
-                      }
                       changeShowStrokesAs={appMethods.changeShowStrokesAs}
                       changeShowStrokesAsList={
                         appMethods.changeShowStrokesAsList

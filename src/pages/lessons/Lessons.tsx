@@ -36,7 +36,6 @@ const Lessons = ({
 
   actualText,
   changeFullscreen,
-  changeShowScoresWhileTyping,
   changeShowStrokesAs,
   changeShowStrokesAsList,
   changeShowStrokesInLesson,
@@ -122,7 +121,6 @@ const Lessons = ({
           <Lesson
             actualText={actualText}
             changeFullscreen={changeFullscreen}
-            changeShowScoresWhileTyping={changeShowScoresWhileTyping}
             changeShowStrokesAs={changeShowStrokesAs}
             changeShowStrokesAsList={changeShowStrokesAsList}
             changeShowStrokesInLesson={changeShowStrokesInLesson}
@@ -208,7 +206,6 @@ const Lessons = ({
           <Lesson
             actualText={actualText}
             changeFullscreen={changeFullscreen}
-            changeShowScoresWhileTyping={changeShowScoresWhileTyping}
             changeShowStrokesAs={changeShowStrokesAs}
             changeShowStrokesAsList={changeShowStrokesAsList}
             changeShowStrokesInLesson={changeShowStrokesInLesson}
@@ -294,7 +291,6 @@ const Lessons = ({
           <Lesson
             actualText={actualText}
             changeFullscreen={changeFullscreen}
-            changeShowScoresWhileTyping={changeShowScoresWhileTyping}
             changeShowStrokesAs={changeShowStrokesAs}
             changeShowStrokesAsList={changeShowStrokesAsList}
             changeShowStrokesInLesson={changeShowStrokesInLesson}
@@ -380,7 +376,6 @@ const Lessons = ({
           <Lesson
             actualText={actualText}
             changeFullscreen={changeFullscreen}
-            changeShowScoresWhileTyping={changeShowScoresWhileTyping}
             changeShowStrokesAs={changeShowStrokesAs}
             changeShowStrokesAsList={changeShowStrokesAsList}
             changeShowStrokesInLesson={changeShowStrokesInLesson}
@@ -466,7 +461,6 @@ const Lessons = ({
           <Lesson
             actualText={actualText}
             changeFullscreen={changeFullscreen}
-            changeShowScoresWhileTyping={changeShowScoresWhileTyping}
             changeShowStrokesAs={changeShowStrokesAs}
             changeShowStrokesAsList={changeShowStrokesAsList}
             changeShowStrokesInLesson={changeShowStrokesInLesson}
@@ -552,7 +546,6 @@ const Lessons = ({
           <Lesson
             actualText={actualText}
             changeFullscreen={changeFullscreen}
-            changeShowScoresWhileTyping={changeShowScoresWhileTyping}
             changeShowStrokesAs={changeShowStrokesAs}
             changeShowStrokesAsList={changeShowStrokesAsList}
             changeShowStrokesInLesson={changeShowStrokesInLesson}
@@ -639,7 +632,6 @@ const Lessons = ({
           <Lesson
             actualText={actualText}
             changeFullscreen={changeFullscreen}
-            changeShowScoresWhileTyping={changeShowScoresWhileTyping}
             changeShowStrokesAs={changeShowStrokesAs}
             changeShowStrokesAsList={changeShowStrokesAsList}
             changeShowStrokesInLesson={changeShowStrokesInLesson}
@@ -726,7 +718,6 @@ const Lessons = ({
           <Lesson
             actualText={actualText}
             changeFullscreen={changeFullscreen}
-            changeShowScoresWhileTyping={changeShowScoresWhileTyping}
             changeShowStrokesAs={changeShowStrokesAs}
             changeShowStrokesAsList={changeShowStrokesAsList}
             changeShowStrokesInLesson={changeShowStrokesInLesson}
@@ -813,7 +804,6 @@ const Lessons = ({
           <Lesson
             actualText={actualText}
             changeFullscreen={changeFullscreen}
-            changeShowScoresWhileTyping={changeShowScoresWhileTyping}
             changeShowStrokesAs={changeShowStrokesAs}
             changeShowStrokesAsList={changeShowStrokesAsList}
             changeShowStrokesInLesson={changeShowStrokesInLesson}
@@ -941,7 +931,6 @@ const Lessons = ({
           <Lesson
             actualText={actualText}
             changeFullscreen={changeFullscreen}
-            changeShowScoresWhileTyping={changeShowScoresWhileTyping}
             changeShowStrokesAs={changeShowStrokesAs}
             changeShowStrokesAsList={changeShowStrokesAsList}
             changeShowStrokesInLesson={changeShowStrokesInLesson}
@@ -1028,7 +1017,6 @@ const Lessons = ({
           <Lesson
             actualText={actualText}
             changeFullscreen={changeFullscreen}
-            changeShowScoresWhileTyping={changeShowScoresWhileTyping}
             changeShowStrokesAs={changeShowStrokesAs}
             changeShowStrokesAsList={changeShowStrokesAsList}
             changeShowStrokesInLesson={changeShowStrokesInLesson}
@@ -1115,7 +1103,6 @@ const Lessons = ({
           <Lesson
             actualText={actualText}
             changeFullscreen={changeFullscreen}
-            changeShowScoresWhileTyping={changeShowScoresWhileTyping}
             changeShowStrokesAs={changeShowStrokesAs}
             changeShowStrokesAsList={changeShowStrokesAsList}
             changeShowStrokesInLesson={changeShowStrokesInLesson}

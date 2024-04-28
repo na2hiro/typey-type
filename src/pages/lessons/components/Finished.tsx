@@ -30,7 +30,6 @@ const getNextLessonPath = (metadata: any) => {
 let topSpeedToday = 0;
 
 const Finished = ({
-  changeShowScoresWhileTyping,
   changeShowStrokesAs,
   changeShowStrokesAsList,
   changeShowStrokesOnMisstroke,
@@ -242,7 +241,6 @@ const Finished = ({
             changeUserSetting={changeUserSetting}
             changeVoiceUserSetting={changeVoiceUserSetting}
             changeSortOrderUserSetting={changeSortOrderUserSetting}
-            changeShowScoresWhileTyping={changeShowScoresWhileTyping}
             changeSpacePlacementUserSetting={changeSpacePlacementUserSetting}
             changeShowStrokesAs={changeShowStrokesAs}
             changeShowStrokesAsList={changeShowStrokesAsList}

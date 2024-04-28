@@ -12,7 +12,6 @@ const defaultArgs = {
   changeSortOrderUserSetting: () => undefined,
   changeSpacePlacementUserSetting: () => undefined,
   changeStenoLayout: () => undefined,
-  changeShowScoresWhileTyping: () => undefined,
   changeShowStrokesAs: () => undefined,
   changeShowStrokesAsList: () => undefined,
   changeShowStrokesOnMisstroke: () => undefined,

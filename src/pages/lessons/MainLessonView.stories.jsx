@@ -160,7 +160,6 @@ const Template = (args) => {
             changeSortOrderUserSetting={() => undefined}
             changeSpacePlacementUserSetting={() => undefined}
             changeStenoLayout={() => undefined}
-            changeShowScoresWhileTyping={() => undefined}
             changeShowStrokesAs={() => undefined}
             changeUserSetting={() => undefined}
             chooseStudy={() => undefined}

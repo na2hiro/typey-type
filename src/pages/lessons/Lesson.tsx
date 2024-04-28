@@ -35,7 +35,6 @@ const isProgressLesson = (pathname: string) =>
 const Lesson = ({
   actualText,
   changeFullscreen,
-  changeShowScoresWhileTyping,
   changeShowStrokesAs,
   changeShowStrokesAsList,
   changeShowStrokesInLesson,
@@ -344,7 +343,6 @@ const Lesson = ({
             <Finished
               changeSortOrderUserSetting={changeSortOrderUserSetting}
               changeSpacePlacementUserSetting={changeSpacePlacementUserSetting}
-              changeShowScoresWhileTyping={changeShowScoresWhileTyping}
               changeShowStrokesAs={changeShowStrokesAs}
               changeShowStrokesAsList={changeShowStrokesAsList}
               changeShowStrokesOnMisstroke={changeShowStrokesOnMisstroke}
@@ -458,7 +456,6 @@ const Lesson = ({
                 overviewLink={overviewLink}
                 propsLesson={propsLesson}
                 actualText={actualText}
-                changeShowScoresWhileTyping={changeShowScoresWhileTyping}
                 changeShowStrokesAs={changeShowStrokesAs}
                 changeShowStrokesAsList={changeShowStrokesAsList}
                 changeShowStrokesInLesson={changeShowStrokesInLesson}
