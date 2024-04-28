@@ -97,7 +97,7 @@ class App extends Component {
     // add the same default to load/set personal preferences code and test.
     let metWordsFromStorage = loadPersonalPreferences()[0];
     let startingMetWordsToday = loadPersonalPreferences()[0];
-    let recentLessons = loadPersonalPreferences()[6];
+    let recentLessons = loadPersonalPreferences()[5];
     this.appFetchAndSetupGlobalDict = fetchAndSetupGlobalDict.bind(this);
 
     this.state = {
@@ -179,42 +179,6 @@ class App extends Component {
         newWords: 15,
         oldWords: 50
       },
-      userSettings: {
-        beatsPerMinute: 10,
-        blurMaterial: false,
-        caseSensitive: false,
-        diagramSize: 1.0,
-        simpleTypography: true,
-        punctuationDescriptions: false,
-        retainedWords: true,
-        limitNumberOfWords: 45,
-        newWords: true,
-        repetitions: 3,
-        showScoresWhileTyping: true,
-        showStrokes: true,
-        showStrokesAsDiagrams: true,
-        showStrokesAsList: true,
-        showStrokesOnMisstroke: true,
-        hideStrokesOnLastRepetition: true,
-        spacePlacement: 'spaceOff',
-        speakMaterial: false,
-        textInputAccessibility: true,
-        sortOrder: 'sortOff',
-        seenWords: true,
-        startFromWord: 1,
-        study: 'discover',
-        stenoLayout: 'stenoLayoutAmericanSteno', // 'stenoLayoutAmericanSteno' || 'stenoLayoutNoNumberBarInnerThumbNumber' || 'stenoLayoutNoNumberBarOuterThumbNumbers' || 'stenoLayoutPalantype' || 'stenoLayoutBrazilianPortugueseSteno' || 'stenoLayoutDanishSteno' || 'stenoLayoutItalianMichelaSteno' || 'stenoLayoutJapanese' || 'stenoLayoutKoreanModernC' || 'stenoLayoutKoreanModernS'
-        upcomingWordsLayout: 'singleLine',
-        studyPresets: [
-          { limitNumberOfWords: 15, repetitions: 5, },
-          { limitNumberOfWords: 50, repetitions: 3, },
-          { limitNumberOfWords: 100, repetitions: 3, },
-          { limitNumberOfWords: 0, repetitions: 1, },
-        ],
-        voiceName: '',
-        voiceURI: '',
-        hideOtherSettings: false,
-      },
       lesson: fallbackLesson,
       lessonIndex: [{
         "title": "Steno",
@@ -262,14 +226,13 @@ class App extends Component {
       synth.cancel();
     }
 
-    writePersonalPreferences('userSettings', this.state.userSettings);
     writePersonalPreferences('metWords', this.state.metWords);
     writePersonalPreferences('flashcardsMetWords', this.state.flashcardsMetWords);
     writePersonalPreferences('flashcardsProgress', this.state.flashcardsProgress);
 
     if (this.state.lesson.path && !this.state.lesson.path.endsWith("/lessons/custom")) {
-      let lessonsProgress = this.updateLessonsProgress(this.state.lesson.path, this.state.lesson, this.state.userSettings, this.state.lessonsProgress);
-      let recentLessons = this.updateRecentLessons(this.state.lesson.path, this.state.userSettings.study, this.state.recentLessons);
+      let lessonsProgress = this.updateLessonsProgress(this.state.lesson.path, this.state.lesson, this.props.userSettings, this.state.lessonsProgress);
+      let recentLessons = this.updateRecentLessons(this.state.lesson.path, this.props.userSettings.study, this.state.recentLessons);
       writePersonalPreferences('lessonsProgress', lessonsProgress);
       writePersonalPreferences('recentLessons', recentLessons);
     }
@@ -315,9 +278,9 @@ class App extends Component {
   updateMetWords(newMetWord) {
     const newMetWordsState = Object.assign({}, this.state.metWords);
     const phraseText =
-      this.state.userSettings.spacePlacement === "spaceBeforeOutput"
+      this.props.userSettings.spacePlacement === "spaceBeforeOutput"
         ? " " + newMetWord
-        : this.state.userSettings.spacePlacement === "spaceAfterOutput"
+        : this.props.userSettings.spacePlacement === "spaceAfterOutput"
         ? newMetWord + " "
         : newMetWord;
     const meetingsCount = newMetWordsState[phraseText] || 0;
@@ -335,7 +298,6 @@ class App extends Component {
     let recentLessonsState = this.state.recentLessons;
     let topSpeedPersonalBestState = this.state.topSpeedPersonalBest;
     let userGoalsState = this.state.userGoals;
-    let userSettingsState = this.state.userSettings;
     if (source && source !== '') {
       try {
         let parsedSource = JSON.parse(source);
@@ -346,7 +308,7 @@ class App extends Component {
       catch (error) { }
     }
     else {
-      [metWordsFromStateOrArg, userSettingsState, flashcardsMetWordsState, flashcardsProgressState, globalUserSettingsState, lessonsProgressState, recentLessonsState, topSpeedPersonalBestState, userGoalsState] = loadPersonalPreferences();
+      [metWordsFromStateOrArg, flashcardsMetWordsState, flashcardsProgressState, globalUserSettingsState, lessonsProgressState, recentLessonsState, topSpeedPersonalBestState, userGoalsState] = loadPersonalPreferences();
     }
 
     let calculatedYourSeenWordCount = calculateSeenWordCount(this.state.metWords);
@@ -360,7 +322,6 @@ class App extends Component {
       recentLessons: recentLessonsState,
       topSpeedPersonalBest: topSpeedPersonalBestState,
       metWords: metWordsFromStateOrArg,
-      userSettings: userSettingsState,
       userGoals: userGoalsState,
       yourSeenWordCount: calculatedYourSeenWordCount,
       yourMemorisedWordCount: calculatedYourMemorisedWordCount,
@@ -372,16 +333,16 @@ class App extends Component {
       writePersonalPreferences('recentLessons', this.state.recentLessons);
       writePersonalPreferences('topSpeedPersonalBest', this.state.topSpeedPersonalBest);
       writePersonalPreferences('metWords', this.state.metWords);
-      writePersonalPreferences('userSettings', this.state.userSettings);
       writePersonalPreferences('userGoals', this.state.userGoals);
       this.setupLesson();
     });
 
-    return [metWordsFromStateOrArg, userSettingsState, flashcardsMetWordsState, flashcardsProgressState, globalUserSettingsState, lessonsProgressState, recentLessonsState, topSpeedPersonalBestState['wpm'], userGoalsState];
+    return [metWordsFromStateOrArg, undefined, flashcardsMetWordsState, flashcardsProgressState, globalUserSettingsState, lessonsProgressState, recentLessonsState, topSpeedPersonalBestState['wpm'], userGoalsState];
   }
 
+  // TODO: sub state of userSettings
   startFromWordOne() {
-    let currentState = this.state.userSettings;
+    let currentState = this.props.userSettings;
     let newState = Object.assign({}, currentState);
 
     const name = "startFromWord"
@@ -393,7 +354,7 @@ class App extends Component {
       if (!(name === 'caseSensitive')) {
         this.setupLesson();
       }
-      writePersonalPreferences('userSettings', this.state.userSettings);
+      writePersonalPreferences('userSettings', this.props.userSettings);
 
       // A hack for returning focus somewhere sensible
       // https://stackoverflow.com/questions/1096436/document-getelementbyidid-focus-is-not-working-for-firefox-or-chrome
@@ -611,6 +572,7 @@ class App extends Component {
     });
   }
 
+  // set user settings
   setUpProgressRevisionLesson(metWordsFromStorage, userSettings, newSeenOrMemorised) {
     let newUserSettings = Object.assign({}, userSettings);
     newUserSettings.newWords = newSeenOrMemorised[0];
@@ -649,9 +611,9 @@ class App extends Component {
 
     let lesson = {};
     // let stenoLayout = "stenoLayoutAmericanSteno";
-    // if (this.state.userSettings) { stenoLayout = this.state.userSettings.stenoLayout; }
+    // if (this.props.userSettings) { stenoLayout = this.props.userSettings.stenoLayout; }
 
-    const loadPlover = this.state.userSettings.showStrokesAsList ? true : false;
+    const loadPlover = userSettings.showStrokesAsList ? true : false;
 
     this.appFetchAndSetupGlobalDict(loadPlover, null).then(() => {
       // grab metWords, trim spaces, and sort by times seen
@@ -712,7 +674,7 @@ class App extends Component {
     const revisionMode = this.state.revisionMode;
     const revisionMaterial = this.state.revisionMaterial;
     const search = this.props.location.search;
-    const userSettings = this.state.userSettings;
+    const userSettings = this.props.userSettings;
     const lessonPath = this.state.lesson.path;
     let newLesson = Object.assign({}, this.state.lesson);
     const prevRecentLessons = this.state.recentLessons;
@@ -858,7 +820,7 @@ class App extends Component {
           !path.includes("collections/tech")
         ) {
 
-          const loadPlover = this.state.userSettings.showStrokesAsList ? true : false;
+          const loadPlover = this.props.userSettings.showStrokesAsList ? true : false;
 
           this.appFetchAndSetupGlobalDict(loadPlover, null).then(() => {
             let lessonWordsAndStrokes = generateListOfWordsAndStrokes(lesson['sourceMaterial'].map(i => i.phrase), this.state.globalLookupDictionary);
@@ -884,7 +846,7 @@ class App extends Component {
             });
           });
         }
-        else if (this.state.userSettings.showStrokesAsList) {
+        else if (this.props.userSettings.showStrokesAsList) {
           const shouldUsePersonalDictionaries = this.state.personalDictionaries
             && Object.entries(this.state.personalDictionaries).length > 0
             && !!this.state.personalDictionaries.dictionariesNamesAndContents;
@@ -1153,7 +1115,7 @@ class App extends Component {
     // This informs word count, WPM, moving onto next phrase, ending lesson
     // eslint-disable-next-line
     let [matchedChars, unmatchedChars, _, unmatchedActual] =
-      matchSplitText(this.state.lesson.presentedMaterial[this.state.currentPhraseID].phrase, actualText, this.state.lesson.settings, this.state.userSettings);
+      matchSplitText(this.state.lesson.presentedMaterial[this.state.currentPhraseID].phrase, actualText, this.state.lesson.settings, this.props.userSettings);
 
     if (this.state.lesson.settings.ignoredChars) {
       matchedChars = removeIgnoredCharsFromSplitText(matchedChars, this.state.lesson.settings.ignoredChars);
@@ -1169,7 +1131,7 @@ class App extends Component {
       text: actualText,
       time: Date.now(),
       numberOfMatchedWordsSoFar: (this.state.totalNumberOfMatchedChars + numberOfMatchedChars) / this.charsPerWord,
-      hintWasShown: shouldShowStroke(this.state.showStrokesInLesson, this.state.userSettings.showStrokes, this.state.repetitionsRemaining, this.state.userSettings.hideStrokesOnLastRepetition)
+      hintWasShown: shouldShowStroke(this.state.showStrokesInLesson, this.props.userSettings.showStrokes, this.state.repetitionsRemaining, this.props.userSettings.hideStrokesOnLastRepetition)
     });
 
     const newState = {
@@ -1183,7 +1145,6 @@ class App extends Component {
       totalNumberOfHintedWords: this.state.totalNumberOfHintedWords,
       actualText: actualText,
       metWords: this.state.metWords,
-      userSettings: this.state.userSettings
     };
 
     // NOTE: here is where attempts are defined before being pushed with completed phrases
@@ -1191,7 +1152,7 @@ class App extends Component {
     const accurateStroke = phraseMisstrokes.strokeAccuracy; // false
     const attempts = phraseMisstrokes.attempts; // [" sign", " ss"]
 
-    if (!accurateStroke && !this.state.showStrokesInLesson && this.state.userSettings.showStrokesOnMisstroke) {
+    if (!accurateStroke && !this.state.showStrokesInLesson && this.props.userSettings.showStrokesOnMisstroke) {
       this.setState({showStrokesInLesson: true});
     }
 
@@ -1199,7 +1160,7 @@ class App extends Component {
       newState.currentPhraseAttempts = []; // reset for next word
       newState.currentLessonStrokes = this.state.currentLessonStrokes; // [{word: "cat", attempts: ["cut"], stroke: "KAT"}, {word: "sciences", attempts ["sign", "ss"], stroke: "SAOEUPB/EPBC/-S"]
 
-      const strokeHintShown = shouldShowStroke(this.state.showStrokesInLesson, this.state.userSettings.showStrokes, this.state.repetitionsRemaining, this.state.userSettings.hideStrokesOnLastRepetition);
+      const strokeHintShown = shouldShowStroke(this.state.showStrokesInLesson, this.props.userSettings.showStrokes, this.state.repetitionsRemaining, this.props.userSettings.hideStrokesOnLastRepetition);
 
       // NOTE: here is where completed phrases are pushed
       newState.currentLessonStrokes.push({
@@ -1221,9 +1182,9 @@ class App extends Component {
 
       if (!strokeHintShown && accurateStroke) {
         // Use the original text when recording to preserve case and spacing
-        const phraseText = this.state.userSettings.spacePlacement === 'spaceBeforeOutput'
+        const phraseText = this.props.userSettings.spacePlacement === 'spaceBeforeOutput'
           ? ' ' + this.state.lesson.presentedMaterial[this.state.currentPhraseID].phrase
-          : this.state.userSettings.spacePlacement === 'spaceAfterOutput'
+          : this.props.userSettings.spacePlacement === 'spaceAfterOutput'
           ? this.state.lesson.presentedMaterial[this.state.currentPhraseID].phrase + ' '
           : this.state.lesson.presentedMaterial[this.state.currentPhraseID].phrase;
 
@@ -1232,7 +1193,7 @@ class App extends Component {
         newState.metWords[phraseText] = meetingsCount + 1;
       }
 
-      if (this.state.userSettings.speakMaterial) {
+      if (this.props.userSettings.speakMaterial) {
         const remaining = this.state.lesson.newPresentedMaterial.getRemaining();
         if (remaining && remaining.length > 0 && remaining[0].hasOwnProperty('phrase')) {
           this.say(remaining[0].phrase);
@@ -1250,7 +1211,7 @@ class App extends Component {
       newState.targetStrokeCount = getTargetStrokeCount(nextItem || { phrase: '', stroke: 'TK-LS' });
       this.state.lesson.newPresentedMaterial.visitNext();
 
-      newState.repetitionsRemaining = repetitionsRemaining(this.state.userSettings, this.state.lesson.presentedMaterial, this.state.currentPhraseID + 1);
+      newState.repetitionsRemaining = repetitionsRemaining(this.props.userSettings, this.state.lesson.presentedMaterial, this.state.currentPhraseID + 1);
       newState.totalNumberOfMatchedChars = this.state.totalNumberOfMatchedChars + numberOfMatchedChars;
       newState.previousCompletedPhraseAsTyped = actualText;
       newState.actualText = '';
@@ -1291,8 +1252,8 @@ class App extends Component {
         //   console.warn(`${event.error}: ${this.text}`);
         // };
 
-        const preferredVoiceURI = this.state.userSettings.voiceURI;
-        const preferredVoiceName = this.state.userSettings.voiceName;
+        const preferredVoiceURI = this.props.userSettings.voiceURI;
+        const preferredVoiceName = this.props.userSettings.voiceName;
         const voiceInVoices =
           voices.find((voice) => voice.voiceURI === preferredVoiceURI) ??
           voices.find((voice) => voice.name === preferredVoiceName);
@@ -1307,7 +1268,7 @@ class App extends Component {
           utterThis.lang = "en";
 
           const lang = navigator.language;
-          if (lang && (lang === "de" || lang.startsWith("de-")) && this.state.userSettings?.stenoLayout === "stenoLayoutPalantype") {
+          if (lang && (lang === "de" || lang.startsWith("de-")) && this.props.userSettings?.stenoLayout === "stenoLayoutPalantype") {
             utterThis.lang = lang;
           }
         }
@@ -1336,7 +1297,7 @@ class App extends Component {
   }
 
   sayCurrentPhraseAgain() {
-    if (this.state.userSettings.speakMaterial) {
+    if (this.props.userSettings.speakMaterial) {
       let currentPhrase = this.state.lesson.presentedMaterial[this.state.currentPhraseID];
       if (currentPhrase && currentPhrase.hasOwnProperty('phrase')) {
         this.say(currentPhrase.phrase);

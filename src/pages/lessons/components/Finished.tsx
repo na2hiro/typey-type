@@ -74,7 +74,6 @@ const Finished = ({
   updatePreset,
   updateRevisionMaterial,
   updateTopSpeedPersonalBest,
-  userSettings,
 }: FinishedProps) => {
   const location = useLocation();
 
@@ -175,7 +174,6 @@ const Finished = ({
             <div className="lesson-canvas lesson-canvas--finished panel overflow-hidden flex relative bg-white dark:bg-coolgrey-1000 p3 mb3">
               {lessonLength === 0 ? (
                 <FinishedZeroAndEmptyStateMessage
-                  startFromWordSetting={userSettings.startFromWord}
                   startFromWordOneClickHandler={startFromWordOne}
                   suggestedNextUrl={getNextLessonPath(metadata)}
                 />
@@ -221,7 +219,6 @@ const Finished = ({
                       reviseLesson={reviseLesson}
                       showMisstrokesSummary={currentLessonStrokes.length > 0}
                       updateRevisionMaterial={updateRevisionMaterial}
-                      userSettings={userSettings}
                     />
                   </div>
                 </div>
@@ -231,7 +228,6 @@ const Finished = ({
               chooseStudy={chooseStudy}
               disableUserSettings={disableUserSettings}
               toggleHideOtherSettings={toggleHideOtherSettings}
-              userSettings={userSettings}
               updatePreset={updatePreset}
             />
           </div>
@@ -262,7 +258,6 @@ const Finished = ({
             maxStartFromWord={lessonLength}
             revisionMode={revisionMode}
             totalWordCount={totalWordCount}
-            userSettings={userSettings}
           />
         </div>
       </div>

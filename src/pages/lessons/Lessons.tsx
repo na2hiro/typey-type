@@ -113,7 +113,6 @@ const Lessons = ({
   updatePreset,
   updateRevisionMaterial,
   updateTopSpeedPersonalBest,
-  userSettings,
 }: LessonsRoutingProps) => {
   return (
     <Switch>
@@ -199,7 +198,6 @@ const Lessons = ({
             updatePreset={updatePreset}
             updateRevisionMaterial={updateRevisionMaterial}
             updateTopSpeedPersonalBest={updateTopSpeedPersonalBest}
-            userSettings={userSettings}
             {...props}
           />
         )}
@@ -286,7 +284,6 @@ const Lessons = ({
             updatePreset={updatePreset}
             updateRevisionMaterial={updateRevisionMaterial}
             updateTopSpeedPersonalBest={updateTopSpeedPersonalBest}
-            userSettings={userSettings}
             {...props}
           />
         )}
@@ -373,7 +370,6 @@ const Lessons = ({
             updatePreset={updatePreset}
             updateRevisionMaterial={updateRevisionMaterial}
             updateTopSpeedPersonalBest={updateTopSpeedPersonalBest}
-            userSettings={userSettings}
             {...props}
           />
         )}
@@ -460,7 +456,6 @@ const Lessons = ({
             updatePreset={updatePreset}
             updateRevisionMaterial={updateRevisionMaterial}
             updateTopSpeedPersonalBest={updateTopSpeedPersonalBest}
-            userSettings={userSettings}
             {...props}
           />
         )}
@@ -547,7 +542,6 @@ const Lessons = ({
             updatePreset={updatePreset}
             updateRevisionMaterial={updateRevisionMaterial}
             updateTopSpeedPersonalBest={updateTopSpeedPersonalBest}
-            userSettings={userSettings}
             {...props}
           />
         )}
@@ -634,7 +628,6 @@ const Lessons = ({
             updatePreset={updatePreset}
             updateRevisionMaterial={updateRevisionMaterial}
             updateTopSpeedPersonalBest={updateTopSpeedPersonalBest}
-            userSettings={userSettings}
             {...props}
           />
         )}
@@ -722,7 +715,6 @@ const Lessons = ({
             updatePreset={updatePreset}
             updateRevisionMaterial={updateRevisionMaterial}
             updateTopSpeedPersonalBest={updateTopSpeedPersonalBest}
-            userSettings={userSettings}
             {...props}
           />
         )}
@@ -810,7 +802,6 @@ const Lessons = ({
             updatePreset={updatePreset}
             updateRevisionMaterial={updateRevisionMaterial}
             updateTopSpeedPersonalBest={updateTopSpeedPersonalBest}
-            userSettings={userSettings}
             {...props}
           />
         )}
@@ -898,7 +889,6 @@ const Lessons = ({
             updatePreset={updatePreset}
             updateRevisionMaterial={updateRevisionMaterial}
             updateTopSpeedPersonalBest={updateTopSpeedPersonalBest}
-            userSettings={userSettings}
             {...props}
           />
         )}
@@ -1027,7 +1017,6 @@ const Lessons = ({
             updatePreset={updatePreset}
             updateRevisionMaterial={updateRevisionMaterial}
             updateTopSpeedPersonalBest={updateTopSpeedPersonalBest}
-            userSettings={userSettings}
             {...props}
           />
         )}
@@ -1115,7 +1104,6 @@ const Lessons = ({
             updatePreset={updatePreset}
             updateRevisionMaterial={updateRevisionMaterial}
             updateTopSpeedPersonalBest={updateTopSpeedPersonalBest}
-            userSettings={userSettings}
             {...props}
           />
         )}
@@ -1203,7 +1191,6 @@ const Lessons = ({
             updatePreset={updatePreset}
             updateRevisionMaterial={updateRevisionMaterial}
             updateTopSpeedPersonalBest={updateTopSpeedPersonalBest}
-            userSettings={userSettings}
             {...props}
           />
         )}

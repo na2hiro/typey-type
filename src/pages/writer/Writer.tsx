@@ -26,6 +26,8 @@ import { fetchResource } from '../../utils/getData';
 import Subheader from "../../components/Subheader";
 
 import type { Outline, UserSettings } from "../../types";
+import { userSettingsState } from "../../states/userSettingsState";
+import { withAtomCompat } from "../../states/atomUtils";
 
 type Props = {
   changeStenoLayout: (event: any) => string,
@@ -409,4 +411,5 @@ class Writer extends Component<Props, State> {
   }
 }
 
-export default Writer;
+// @ts-ignore
+export default withAtomCompat(Writer, "userSettings", userSettingsState);

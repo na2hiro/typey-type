@@ -136,7 +136,6 @@ const AppRoutes = ({ appProps, appState, appMethods }) => {
                       changeStenoLayout={appMethods.changeStenoLayout}
                       changeWriterInput={appMethods.changeWriterInput}
                       globalUserSettings={appState.globalUserSettings}
-                      userSettings={appState.userSettings}
                       {...props}
                     />
                   </ErrorBoundary>

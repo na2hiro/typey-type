@@ -14,6 +14,8 @@ import MainLessonView from "./MainLessonView";
 import { LessonProps } from "./types";
 import type { Lesson as LessonType } from "../../types";
 import Zipper from "../../utils/zipper";
+import { useAtomValue } from "jotai";
+import { userSettingsState } from "../../states/userSettingsState";
 
 const isCustom = (pathname: string) =>
   pathname === "/lessons/custom" || pathname === "/lessons/custom/setup";
@@ -111,8 +113,8 @@ const Lesson = ({
   updatePreset,
   updateRevisionMaterial,
   updateTopSpeedPersonalBest,
-  userSettings,
 }: LessonProps) => {
+  const userSettings = useAtomValue(userSettingsState);
   const loadedLessonPath = useRef("");
 
   // const mainHeading = useRef<HTMLHeadingElement>(null);
@@ -141,7 +143,7 @@ const Lesson = ({
         let newSeenOrMemorised = [false, true, true];
         setUpProgressRevisionLesson(
           loadedPersonalPreferences[0],
-          loadedPersonalPreferences[1],
+          userSettings,
           newSeenOrMemorised
         );
       } else if (location.pathname.startsWith("/lessons/progress/seen/")) {
@@ -149,7 +151,7 @@ const Lesson = ({
         let newSeenOrMemorised = [false, true, false];
         setUpProgressRevisionLesson(
           loadedPersonalPreferences[0],
-          loadedPersonalPreferences[1],
+          userSettings,
           newSeenOrMemorised
         );
       } else if (location.pathname.startsWith("/lessons/progress/memorised/")) {
@@ -157,7 +159,7 @@ const Lesson = ({
         let newSeenOrMemorised = [false, false, true];
         setUpProgressRevisionLesson(
           loadedPersonalPreferences[0],
-          loadedPersonalPreferences[1],
+          userSettings,
           newSeenOrMemorised
         );
       } else if (
@@ -384,7 +386,6 @@ const Lesson = ({
               totalNumberOfMistypedWords={totalNumberOfMistypedWords}
               totalNumberOfHintedWords={totalNumberOfHintedWords}
               totalWordCount={propsLesson.presentedMaterial.length}
-              userSettings={userSettings}
             />
           </main>
         </DocumentTitle>
@@ -434,7 +435,6 @@ const Lesson = ({
                     )}
                     updateGlobalLookupDictionary={updateGlobalLookupDictionary}
                     updatePersonalDictionaries={updatePersonalDictionaries}
-                    userSettings={userSettings}
                     fullscreen={fullscreen}
                     changeFullscreen={changeFullscreen.bind(this)}
                     lessonpath={
@@ -510,7 +510,6 @@ const Lesson = ({
                 upcomingPhrases={upcomingPhrases}
                 updatePreset={updatePreset}
                 updateMarkup={updateMarkup.bind(this)}
-                userSettings={userSettings}
               />
             )}
           />

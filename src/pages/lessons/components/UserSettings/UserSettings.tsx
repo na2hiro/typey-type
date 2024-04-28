@@ -8,7 +8,8 @@ import SpeakWordsHelp from "../SpeakWordsHelp";
 import VoiceSetting from "../VoiceSetting";
 import useAnnounceTooltip from "../../../../components/Announcer/useAnnounceTooltip";
 
-import type { UserSettings as UserSettingsObjectType } from "../../../../types";
+import { useAtomValue } from "jotai";
+import { userSettingsState } from "../../../../states/userSettingsState";
 
 const grabStyle = function () {
   return false;
@@ -34,7 +35,6 @@ type Props = {
   maxStartFromWord: number;
   revisionMode: boolean;
   totalWordCount: number;
-  userSettings: UserSettingsObjectType;
 };
 
 const UserSettings = ({
@@ -57,8 +57,8 @@ const UserSettings = ({
   maxStartFromWord,
   revisionMode,
   totalWordCount,
-  userSettings,
 }: Props) => {
+  const userSettings = useAtomValue(userSettingsState);
   const announceTooltip = useAnnounceTooltip();
 
   return (
