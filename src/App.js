@@ -240,6 +240,7 @@ class App extends Component {
     };
   }
 
+  // personal preference + lessonIndex (lesson-related pages)
   componentDidMount() {
     this.setPersonalPreferences();
 
@@ -250,11 +251,13 @@ class App extends Component {
     });
   }
 
+  // lesson
   handleStopLesson(event) {
     event.preventDefault();
     this.stopLesson();
   }
 
+  // lesson
   stopLesson() {
     this.stopTimer();
 
@@ -295,10 +298,12 @@ class App extends Component {
     });
   }
 
+  // lesson
   startTimer() {
     this.intervalID = window.setInterval(this.updateWPM.bind(this), 1000);
   }
 
+  // lesson
   stopTimer() {
     if (this.intervalID) {
       clearInterval(this.intervalID);
@@ -306,12 +311,14 @@ class App extends Component {
     }
   }
 
+  // lesson
   updateWPM() {
     this.setState({
       timer: new Date().getTime() - this.state.startTime
     });
   }
 
+  // lesson + other games
   updateMetWords(newMetWord) {
     const newMetWordsState = Object.assign({}, this.state.metWords);
     const phraseText =
@@ -326,6 +333,7 @@ class App extends Component {
     writePersonalPreferences("metWords", newMetWordsState);
   }
 
+  // personal preferences
   setPersonalPreferences(source) {
     let metWordsFromStateOrArg = this.state.metWords;
     let flashcardsMetWordsState = this.state.flashcardsMetWords;
@@ -380,6 +388,7 @@ class App extends Component {
     return [metWordsFromStateOrArg, userSettingsState, flashcardsMetWordsState, flashcardsProgressState, globalUserSettingsState, lessonsProgressState, recentLessonsState, topSpeedPersonalBestState['wpm'], userGoalsState];
   }
 
+  // lesson
   startFromWordOne() {
     let currentState = this.state.userSettings;
     let newState = Object.assign({}, currentState);
@@ -419,6 +428,7 @@ class App extends Component {
     });
   }
 
+  // lesson
   updateLessonsProgress(lessonpath, lesson, userSettings, prevlessonsProgress) {
     const metWords = this.state.metWords;
     const lessonsProgress = Object.assign({}, prevlessonsProgress);
@@ -510,6 +520,7 @@ class App extends Component {
     return lessonsProgress;
   }
 
+  // lesson
   updateRecentLessons(recentLessonPath, studyType, prevRecentLessons) {
     let trimmedRecentLessonPath = recentLessonPath.replace(process.env.PUBLIC_URL,'').replace('lesson.txt','');
     const recentLessons = Object.assign({}, prevRecentLessons);
@@ -537,6 +548,7 @@ class App extends Component {
     return recentLessons;
   }
 
+  // flashcards
   updateFlashcardsProgress(lessonpath) {
     let flashcardsProgress = Object.assign({}, this.state.flashcardsProgress);
 
@@ -551,6 +563,7 @@ class App extends Component {
     return flashcardsProgress;
   }
 
+  // flashcards
   updateFlashcardsMetWords(word, feedback, stroke, rung = 0) {
     let localStroke = stroke || "XXX";
     let flashcardsMetWords = Object.assign({}, this.state.flashcardsMetWords);
@@ -586,6 +599,7 @@ class App extends Component {
     return flashcardsMetWords;
   }
 
+  // progress (load progress)
   updateStartingMetWordsAndCounts(providedMetWords) {
     this.setState({
       startingMetWordsToday: providedMetWords,
@@ -594,16 +608,19 @@ class App extends Component {
     });
   }
 
+  // lesson (finished)
   updateTopSpeedPersonalBest(wpm) {
     this.setState({topSpeedPersonalBest: wpm});
     writePersonalPreferences('topSpeedPersonalBest', wpm);
   }
 
+  // progress
   updateUserGoals(userGoals) {
     this.setState({userGoals: userGoals});
     writePersonalPreferences('userGoals', userGoals);
   }
 
+  // progress
   updateUserGoalsUnveiled(oldWordsGoalUnveiled, newWordsGoalUnveiled) {
     this.setState({
       oldWordsGoalUnveiled: oldWordsGoalUnveiled,
@@ -611,6 +628,7 @@ class App extends Component {
     });
   }
 
+  // lesson
   setUpProgressRevisionLesson(metWordsFromStorage, userSettings, newSeenOrMemorised) {
     let newUserSettings = Object.assign({}, userSettings);
     newUserSettings.newWords = newSeenOrMemorised[0];
@@ -708,6 +726,7 @@ class App extends Component {
     });
   }
 
+  // lesson
   setupLesson() {
     const revisionMode = this.state.revisionMode;
     const revisionMaterial = this.state.revisionMaterial;
@@ -844,6 +863,7 @@ class App extends Component {
     });
   }
 
+  // lesson
   handleLesson(path) {
     getLesson(path).then((lessonText) => {
       if (isLessonTextValid(lessonText)) {
@@ -942,6 +962,7 @@ class App extends Component {
     });
   }
 
+  // lesson
   startCustomLesson() {
     let lesson = Object.assign({}, this.state.customLesson);
     lesson.title = 'Custom'
@@ -953,6 +974,7 @@ class App extends Component {
     });
   }
 
+  // lesson
   createCustomLesson(event) {
     if (event && event.target) {
       let providedText = event.target.value || '';
@@ -986,6 +1008,7 @@ class App extends Component {
     return event;
   }
 
+  // lesson
   reviseLesson(event) {
     event.preventDefault();
     let currentLessonStrokes = this.state.currentLessonStrokes;
@@ -1010,6 +1033,7 @@ class App extends Component {
     this.restartLesson(event, revisionMode);
   }
 
+  // lesson
   restartLesson(event, revise = false) {
     event.preventDefault();
     let revisionMode = revise;
@@ -1042,14 +1066,17 @@ class App extends Component {
     });
   }
 
+  // dictionary management
   updatePersonalDictionaries(personalDictionaries) {
     this.setState({personalDictionaries: personalDictionaries});
   }
 
+  // dictionary
   updateGlobalLookupDictionary(combinedLookupDictionary) {
     this.setState({globalLookupDictionary: combinedLookupDictionary});
   }
 
+  // progress
   updateRecommendationHistory(prevRecommendationHistory, lessonIndex = this.state.lessonIndex) {
     let newRecommendationHistory = Object.assign({}, prevRecommendationHistory);
 
@@ -1114,6 +1141,7 @@ class App extends Component {
       });
   }
 
+  // progress
   updateFlashcardsRecommendation() {
     getFlashcardsNextLesson(this.state.flashcardsProgress, this.state.globalUserSettings.flashcardsCourseLevel, this.state.flashcardsCourseIndex)
       .then((nextFlashcardsLessonAndCourseIndex) => {
@@ -1137,6 +1165,7 @@ class App extends Component {
       });
   }
 
+  // lesson
   updateMarkup(event) {
     let actualText = event.target.value;
 
@@ -1268,6 +1297,7 @@ class App extends Component {
     });
   }
 
+  // lesson (voice)
   /** @param { string } utteranceText */
   say(utteranceText) {
     try {
@@ -1335,6 +1365,7 @@ class App extends Component {
     }
   }
 
+  // lesson (voice)
   sayCurrentPhraseAgain() {
     if (this.state.userSettings.speakMaterial) {
       let currentPhrase = this.state.lesson.presentedMaterial[this.state.currentPhraseID];
@@ -1344,19 +1375,23 @@ class App extends Component {
     }
   }
 
+  // lesson
   isFinished() {
     let presentedMaterialLength = (this.state.lesson && this.state.lesson.presentedMaterial) ? this.state.lesson.presentedMaterial.length : 0;
     return (this.state.currentPhraseID === presentedMaterialLength);
   }
 
+  // lesson
   presentCompletedMaterial() {
     return this.state.lesson.newPresentedMaterial ? this.state.lesson.newPresentedMaterial.getCompleted().map(item => item.phrase) : [];
   }
 
+  // lesson
   presentUpcomingMaterial() {
     return this.state.lesson.newPresentedMaterial ? this.state.lesson.newPresentedMaterial.getRemaining().slice().map(item => item.phrase) : [];
   }
 
+  // dictionary
   setDictionaryIndex() {
     fetchDictionaryIndex().then((json) => {
       this.setState({ dictionaryIndex: json })
