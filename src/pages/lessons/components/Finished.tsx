@@ -53,7 +53,6 @@ const Finished = ({
   lessonLength,
   lessonTitle,
   metadata,
-  metWords,
   path,
   restartLesson,
   reviseLesson,
@@ -213,7 +212,6 @@ const Finished = ({
                     <FinishedMisstrokesSummary
                       currentLessonStrokes={currentLessonStrokes}
                       globalUserSettings={globalUserSettings}
-                      metWords={metWords}
                       path={path}
                       reviseLesson={reviseLesson}
                       showMisstrokesSummary={currentLessonStrokes.length > 0}

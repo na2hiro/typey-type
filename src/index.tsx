@@ -7,8 +7,9 @@ import App from "./App";
 import withAnalyticsTracker from "./utils/withAnalyticsTracker";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./index.scss";
-import { withAtomCompat } from "./states/atomUtils";
+import { withAtomsCompat } from "./states/atomUtils";
 import { userSettingsState } from "./states/userSettingsState";
+import { metWordsState, yourMemorisedWordCountState, yourSeenWordCountState } from "./states/metWordsState";
 
 if (process.env.NODE_ENV === "production" && !process.env.REACT_APP_QA) {
   init({
@@ -27,7 +28,15 @@ ReactDOM.render(
     <Router basename="/typey-type">
       <ErrorBoundary>
         {/* @ts-ignore */}
-        <Route component={withAtomCompat(withAnalyticsTracker(App), "userSettings", userSettingsState)} />
+        <Route component={withAtomsCompat(
+          withAnalyticsTracker(App),
+          [
+            ["userSettings", userSettingsState],
+            ["metWords", metWordsState],
+            ["yourSeenWordCount", yourSeenWordCountState],
+            ["yourMemorisedWordCount", yourMemorisedWordCountState],
+          ])}
+        />
       </ErrorBoundary>
     </Router>
   </DocumentTitle>,

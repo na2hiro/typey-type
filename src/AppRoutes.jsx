@@ -159,9 +159,7 @@ const AppRoutes = ({ appProps, appState, appMethods }) => {
                       globalLookupDictionaryLoaded={
                         appState.globalLookupDictionaryLoaded
                       }
-                      metWords={appState.metWords}
                       startingMetWordsToday={appState.startingMetWordsToday}
-                      updateMetWords={appMethods.updateMetWords}
                       updateMultipleMetWords={appMethods.updateMultipleMetWords}
                       globalUserSettings={appState.globalUserSettings}
                       userSettings={appState.userSettings}
@@ -209,8 +207,6 @@ const AppRoutes = ({ appProps, appState, appMethods }) => {
                       changeFlashcardCourseLevel={
                         appMethods.changeFlashcardCourseLevel
                       }
-                      setPersonalPreferences={appMethods.setPersonalPreferences}
-                      metWords={appState.metWords}
                       flashcardsMetWords={appState.flashcardsMetWords}
                       flashcardsProgress={appState.flashcardsProgress}
                       flashcardsNextLesson={appState.flashcardsNextLesson}
@@ -239,8 +235,6 @@ const AppRoutes = ({ appProps, appState, appMethods }) => {
                       userSettings={appState.userSettings}
                       oldWordsGoalUnveiled={appState.oldWordsGoalUnveiled}
                       newWordsGoalUnveiled={appState.newWordsGoalUnveiled}
-                      yourSeenWordCount={appState.yourSeenWordCount}
-                      yourMemorisedWordCount={appState.yourMemorisedWordCount}
                     />
                   </ErrorBoundary>
                 </DocumentTitle>
@@ -449,7 +443,6 @@ const AppRoutes = ({ appProps, appState, appMethods }) => {
                       toggleHideOtherSettings={
                         appMethods.toggleHideOtherSettings
                       }
-                      metWords={appState.metWords}
                       previousCompletedPhraseAsTyped={
                         appState.previousCompletedPhraseAsTyped
                       }

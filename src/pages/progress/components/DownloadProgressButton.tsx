@@ -2,13 +2,12 @@ import React from "react";
 import GoogleAnalytics from "react-ga4";
 import formatProgressFileDownloadName from "../utils/formatProgressFileDownloadName";
 import makeDownloadHref from "../../../utils/makeDownloadHref";
-import type { MetWords } from "../../../types";
+import { useAtomValue } from "jotai";
+import { metWordsState } from "../../../states/metWordsState";
 
-type Props = {
-  metWords: MetWords;
-};
 
-const DownloadProgressButton = ({ metWords }: Props) => {
+const DownloadProgressButton = () => {
+  const metWords = useAtomValue(metWordsState);
   const downloadProgress = () => {
     GoogleAnalytics.event({
       category: "Downloads",

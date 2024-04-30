@@ -29,8 +29,6 @@ import queryString from 'query-string';
 import GoogleAnalytics from "react-ga4";
 import fallbackLesson from './constant/fallbackLesson';
 import fetchAndSetupGlobalDict from './utils/app/fetchAndSetupGlobalDict';
-import calculateMemorisedWordCount from './utils/calculateMemorisedWordCount';
-import calculateSeenWordCount from './utils/calculateSeenWordCount';
 import increaseMetWords from './utils/increaseMetWords';
 import filterByFamiliarity from './utils/lessons/filterByFamiliarity';
 import replaceSmartTypographyInPresentedMaterial from './utils/lessons/replaceSmartTypographyInPresentedMaterial';
@@ -94,9 +92,8 @@ class App extends Component {
     this.charsPerWord = 5;
     // When updating default state for anything stored in local storage,
     // add the same default to load/set personal preferences code and test.
-    let metWordsFromStorage = loadPersonalPreferences()[0];
-    let startingMetWordsToday = loadPersonalPreferences()[0];
-    let recentLessons = loadPersonalPreferences()[5];
+    let startingMetWordsToday = this.props.metWords;
+    let recentLessons = loadPersonalPreferences()[4];
     this.appFetchAndSetupGlobalDict = fetchAndSetupGlobalDict.bind(this);
 
     this.state = {
@@ -170,7 +167,6 @@ class App extends Component {
       totalNumberOfMistypedWords: 0,
       totalNumberOfHintedWords: 0,
       disableUserSettings: false,
-      metWords: metWordsFromStorage,
       revisionMode: false,
       oldWordsGoalUnveiled: false,
       newWordsGoalUnveiled: false,
@@ -198,8 +194,6 @@ class App extends Component {
       revisionMaterial: [
       ],
       startingMetWordsToday: startingMetWordsToday,
-      yourSeenWordCount: calculateSeenWordCount(metWordsFromStorage),
-      yourMemorisedWordCount: calculateMemorisedWordCount(metWordsFromStorage)
     };
   }
 
@@ -225,7 +219,6 @@ class App extends Component {
       synth.cancel();
     }
 
-    writePersonalPreferences('metWords', this.state.metWords);
     writePersonalPreferences('flashcardsMetWords', this.state.flashcardsMetWords);
     writePersonalPreferences('flashcardsProgress', this.state.flashcardsProgress);
 
@@ -252,8 +245,6 @@ class App extends Component {
       disableUserSettings: false,
       numberOfMatchedChars: 0,
       totalNumberOfMatchedChars: 0,
-      yourSeenWordCount: calculateSeenWordCount(this.state.metWords),
-      yourMemorisedWordCount: calculateMemorisedWordCount(this.state.metWords)
     });
   }
 
@@ -274,22 +265,7 @@ class App extends Component {
     });
   }
 
-  updateMetWords(newMetWord) {
-    const newMetWordsState = Object.assign({}, this.state.metWords);
-    const phraseText =
-      this.props.userSettings.spacePlacement === "spaceBeforeOutput"
-        ? " " + newMetWord
-        : this.props.userSettings.spacePlacement === "spaceAfterOutput"
-        ? newMetWord + " "
-        : newMetWord;
-    const meetingsCount = newMetWordsState[phraseText] || 0;
-    newMetWordsState[phraseText] = meetingsCount + 1;
-    this.setState({ metWords: newMetWordsState });
-    writePersonalPreferences("metWords", newMetWordsState);
-  }
-
-  setPersonalPreferences(source) {
-    let metWordsFromStateOrArg = this.state.metWords;
+  setPersonalPreferences() {
     let flashcardsMetWordsState = this.state.flashcardsMetWords;
     let flashcardsProgressState = this.state.flashcardsProgress;
     let globalUserSettingsState = this.state.globalUserSettings;
@@ -297,21 +273,7 @@ class App extends Component {
     let recentLessonsState = this.state.recentLessons;
     let topSpeedPersonalBestState = this.state.topSpeedPersonalBest;
     let userGoalsState = this.state.userGoals;
-    if (source && source !== '') {
-      try {
-        let parsedSource = JSON.parse(source);
-        if (parsedSource && typeof parsedSource === "object") {
-          metWordsFromStateOrArg = parsedSource;
-        }
-      }
-      catch (error) { }
-    }
-    else {
-      [metWordsFromStateOrArg, flashcardsMetWordsState, flashcardsProgressState, globalUserSettingsState, lessonsProgressState, recentLessonsState, topSpeedPersonalBestState, userGoalsState] = loadPersonalPreferences();
-    }
-
-    let calculatedYourSeenWordCount = calculateSeenWordCount(this.state.metWords);
-    let calculatedYourMemorisedWordCount = calculateMemorisedWordCount(this.state.metWords);
+    [flashcardsMetWordsState, flashcardsProgressState, globalUserSettingsState, lessonsProgressState, recentLessonsState, topSpeedPersonalBestState, userGoalsState] = loadPersonalPreferences();
 
     this.setState({
       flashcardsMetWords: flashcardsMetWordsState,
@@ -320,10 +282,7 @@ class App extends Component {
       lessonsProgress: lessonsProgressState,
       recentLessons: recentLessonsState,
       topSpeedPersonalBest: topSpeedPersonalBestState,
-      metWords: metWordsFromStateOrArg,
       userGoals: userGoalsState,
-      yourSeenWordCount: calculatedYourSeenWordCount,
-      yourMemorisedWordCount: calculatedYourMemorisedWordCount,
     }, () => {
       writePersonalPreferences('flashcardsMetWords', this.state.flashcardsMetWords);
       writePersonalPreferences('flashcardsProgress', this.state.flashcardsProgress);
@@ -331,12 +290,11 @@ class App extends Component {
       writePersonalPreferences('lessonsProgress', this.state.lessonsProgress);
       writePersonalPreferences('recentLessons', this.state.recentLessons);
       writePersonalPreferences('topSpeedPersonalBest', this.state.topSpeedPersonalBest);
-      writePersonalPreferences('metWords', this.state.metWords);
       writePersonalPreferences('userGoals', this.state.userGoals);
       this.setupLesson();
     });
 
-    return [metWordsFromStateOrArg, undefined, flashcardsMetWordsState, flashcardsProgressState, globalUserSettingsState, lessonsProgressState, recentLessonsState, topSpeedPersonalBestState['wpm'], userGoalsState];
+    return [undefined, flashcardsMetWordsState, flashcardsProgressState, globalUserSettingsState, lessonsProgressState, recentLessonsState, topSpeedPersonalBestState['wpm'], userGoalsState];
   }
 
   // TODO: sub state of userSettings
@@ -380,7 +338,7 @@ class App extends Component {
   }
 
   updateLessonsProgress(lessonpath, lesson, userSettings, prevlessonsProgress) {
-    const metWords = this.state.metWords;
+    const { metWords } = this.props;
     const lessonsProgress = Object.assign({}, prevlessonsProgress);
 
     // This is actually UNIQUE numberOfWordsSeen.
@@ -549,8 +507,6 @@ class App extends Component {
   updateStartingMetWordsAndCounts(providedMetWords) {
     this.setState({
       startingMetWordsToday: providedMetWords,
-      yourSeenWordCount: calculateSeenWordCount(providedMetWords),
-      yourMemorisedWordCount: calculateMemorisedWordCount(providedMetWords)
     });
   }
 
@@ -731,10 +687,10 @@ class App extends Component {
       }
 
       // Filter lesson by familiarity:
-      newLesson.presentedMaterial = filterByFamiliarity.call(this, newLesson.presentedMaterial, this.state.metWords, newSettings, revisionMode);
+      newLesson.presentedMaterial = filterByFamiliarity.call(this, newLesson.presentedMaterial, this.props.metWords, newSettings, revisionMode);
 
       // Sort lesson:
-      newLesson.presentedMaterial = sortLesson.call(this, newLesson.presentedMaterial, this.state.metWords, newSettings);
+      newLesson.presentedMaterial = sortLesson.call(this, newLesson.presentedMaterial, this.props.metWords, newSettings);
 
       // Apply range (start from & limit) to lesson:
       if (revisionMode && limitNumberOfWords > 0) {
@@ -1045,7 +1001,7 @@ class App extends Component {
         break;
     }
 
-    getRecommendedNextLesson(this.state.lessonsProgress, newRecommendationHistory, this.state.yourSeenWordCount, this.state.yourMemorisedWordCount, lessonIndex, this.state.metWords)
+    getRecommendedNextLesson(this.state.lessonsProgress, newRecommendationHistory, this.props.yourSeenWordCount, this.props.yourMemorisedWordCount, lessonIndex, this.props.metWords)
       .then((nextRecommendedLesson) => {
         let prevRecommendedLesson = this.state.recommendedNextLesson;
         this.setState({
@@ -1143,7 +1099,6 @@ class App extends Component {
       totalNumberOfMistypedWords: this.state.totalNumberOfMistypedWords,
       totalNumberOfHintedWords: this.state.totalNumberOfHintedWords,
       actualText: actualText,
-      metWords: this.state.metWords,
     };
 
     // NOTE: here is where attempts are defined before being pushed with completed phrases
@@ -1187,9 +1142,11 @@ class App extends Component {
           ? this.state.lesson.presentedMaterial[this.state.currentPhraseID].phrase + ' '
           : this.state.lesson.presentedMaterial[this.state.currentPhraseID].phrase;
 
-        const meetingsCount = newState.metWords[phraseText] || 0;
+        let newMetWords = {...this.props.metWords};
+        const meetingsCount = newMetWords[phraseText] || 0;
         Object.assign(newState, increaseMetWords(meetingsCount, this.state.totalNumberOfNewWordsMet, this.state.totalNumberOfLowExposuresSeen, this.state.totalNumberOfRetainedWords));
-        newState.metWords[phraseText] = meetingsCount + 1;
+        newMetWords[phraseText] = meetingsCount + 1;
+        this.props.setMetWords(newMetWords);
       }
 
       if (this.props.userSettings.speakMaterial) {
@@ -1216,9 +1173,6 @@ class App extends Component {
       newState.actualText = '';
       newState.showStrokesInLesson = false;
       newState.currentPhraseID = nextPhraseID;
-
-      newState.yourSeenWordCount = calculateSeenWordCount(this.state.metWords);
-      newState.yourMemorisedWordCount = calculateMemorisedWordCount(this.state.metWords);
     }
 
     this.setState(newState, () => {
@@ -1388,7 +1342,6 @@ class App extends Component {
               reviseLesson: this.reviseLesson.bind(this),
               sayCurrentPhraseAgain: this.sayCurrentPhraseAgain.bind(this),
               setDictionaryIndex: this.setDictionaryIndex.bind(this),
-              setPersonalPreferences: this.setPersonalPreferences.bind(this),
               setUpProgressRevisionLesson: this.setUpProgressRevisionLesson.bind(this),
               setupLesson: this.setupLesson.bind(this),
               startCustomLesson: this.startCustomLesson.bind(this),
@@ -1401,7 +1354,6 @@ class App extends Component {
               updateFlashcardsRecommendation: this.updateFlashcardsRecommendation.bind(this),
               updateGlobalLookupDictionary: this.updateGlobalLookupDictionary.bind(this),
               updateMarkup: this.updateMarkup.bind(this),
-              updateMetWords: this.updateMetWords.bind(this),
               updatePersonalDictionaries: this.updatePersonalDictionaries.bind(this),
               updatePreset: updatePreset.bind(this),
               updateRecommendationHistory: this.updateRecommendationHistory.bind(this),

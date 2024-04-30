@@ -14,9 +14,11 @@ import ProgressSummaryAndLinks from "./components/ProgressSummaryAndLinks";
 import LessonsProgress from "./components/LessonsProgress";
 import DownloadProgressButton from "./components/DownloadProgressButton";
 import Subheader from "../../components/Subheader";
-import { GlobalUserSettings, MetWords, UserSettings } from "../../types";
+import { GlobalUserSettings, UserSettings } from "../../types";
 import BackupBanner from "./components/BackupBanner";
 import BackupModal from "./components/BackupModal";
+import { useAtomValue } from "jotai";
+import { metWordsState, useLoadMetWordsFromText } from "../../states/metWordsState";
 
 const skipButtonId = "js-flashcards-skip-button";
 const mobileSkipButtonId = "js-mobile-flashcards-skip-button";
@@ -29,7 +31,6 @@ type Props = {
   globalUserSettings: GlobalUserSettings;
   lessonIndex: any;
   lessonsProgress: any;
-  metWords: MetWords;
   newWordsGoalUnveiled: any;
   oldWordsGoalUnveiled: any;
   recentLessonHistory: any;
@@ -50,6 +51,7 @@ type Props = {
 };
 
 const Progress = (props: Props) => {
+  const metWords = useAtomValue(metWordsState);
   const mainHeading = useRef<HTMLHeadingElement>(null);
   const canvas = useRef(null);
   const firstGoalsRender = useRef(true);
@@ -91,7 +93,7 @@ const Progress = (props: Props) => {
       });
 
     const [todayOldWordCountToUpdate, todayNewWordCountToUpdate] =
-      Object.entries(props.metWords).reduce(
+      Object.entries(metWords).reduce(
         (accumulator, [phrase, timesSeen]) => {
           if (
             props.startingMetWordsToday[phrase] &&
@@ -191,6 +193,7 @@ const Progress = (props: Props) => {
     setShowLoadInput(true);
   }
 
+  const loadMetWordsFromText = useLoadMetWordsFromText();
   function handleLoadProgress() {
     const textareas = document.querySelectorAll(
       ".js-metwords-from-personal-store"
@@ -199,7 +202,7 @@ const Progress = (props: Props) => {
       textareas.length > 1 ? textareas[1] : textareas[0]
     ) as HTMLTextAreaElement;
 
-    props.setPersonalPreferences(textareaContents.value);
+    loadMetWordsFromText(textareaContents.value);
     setFlashWarning("To update your lesson progress, visit the lessons.");
 
     let numberOfMetWords = "0";
@@ -428,7 +431,7 @@ const Progress = (props: Props) => {
             </header>
           </div>
           <div className="flex mxn2">
-            <DownloadProgressButton metWords={props.metWords} />
+            <DownloadProgressButton />
           </div>
         </Subheader>
         <canvas
@@ -485,7 +488,7 @@ const Progress = (props: Props) => {
           />
 
           <ProgressSummaryAndLinks
-            metWords={props.metWords}
+            metWords={metWords}
             restartConfetti={restartConfetti.bind(this)}
             yourMemorisedWordCount={props.yourMemorisedWordCount}
             yourSeenWordCount={props.yourSeenWordCount}
@@ -581,7 +584,6 @@ const Progress = (props: Props) => {
 
           <h3 id="vocabulary-progress">Vocabulary progress</h3>
           <ReformatProgress
-            metWords={props.metWords}
             userSettings={props.userSettings}
           />
           <p>Words you’ve seen and times you’ve typed them well:</p>
@@ -589,7 +591,7 @@ const Progress = (props: Props) => {
             id="js-metwords-from-typey-type"
             className="w-100 mt3 mb3 quote break-words whitespace-break-spaces"
           >
-            <small>{JSON.stringify(props.metWords)}</small>
+            <small>{JSON.stringify(metWords)}</small>
           </p>
         </div>
       </main>

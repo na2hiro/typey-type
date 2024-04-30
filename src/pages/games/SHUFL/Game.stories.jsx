@@ -8,13 +8,10 @@ export default {
   component: Game,
 };
 
-const fauxUpdateMetWords = (metWord) => console.log(metWord);
-
 const Template = (args) => (
   <div className="p3">
     <Game
       globalLookupDictionary={new Map()}
-      updateMetWords={fauxUpdateMetWords}
       globalLookupDictionaryLoaded={true}
       startingMetWordsToday={{'the': 2}}
       {...args}

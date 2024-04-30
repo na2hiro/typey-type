@@ -61,11 +61,9 @@ type Props = {
   fetchAndSetupGlobalDict: FetchAndSetupGlobalDict;
   globalLookupDictionary: LookupDictWithNamespacedDictsAndConfig;
   globalLookupDictionaryLoaded: boolean;
-  metWords: MetWords;
   startingMetWordsToday: MetWords;
   globalUserSettings: GlobalUserSettings;
   userSettings: UserSettings;
-  updateMetWords: any;
   updateMultipleMetWords: (newMetWords: string[]) => void;
 };
 
@@ -75,11 +73,9 @@ const Games = ({
   fetchAndSetupGlobalDict,
   globalLookupDictionary,
   globalLookupDictionaryLoaded,
-  metWords,
   globalUserSettings,
   userSettings,
   startingMetWordsToday,
-  updateMetWords,
   updateMultipleMetWords,
 }: Props) => {
   return (
@@ -112,7 +108,6 @@ const Games = ({
               globalLookupDictionary={globalLookupDictionary}
               globalLookupDictionaryLoaded={globalLookupDictionaryLoaded}
               startingMetWordsToday={startingMetWordsToday}
-              updateMetWords={updateMetWords}
             />
           </ErrorBoundary>
         </DocumentTitle>
@@ -138,7 +133,6 @@ const Games = ({
               fetchAndSetupGlobalDict={fetchAndSetupGlobalDict}
               globalLookupDictionary={globalLookupDictionary}
               globalLookupDictionaryLoaded={globalLookupDictionaryLoaded}
-              metWords={metWords}
               globalUserSettings={globalUserSettings}
               userSettings={userSettings}
               updateMultipleMetWords={updateMultipleMetWords}

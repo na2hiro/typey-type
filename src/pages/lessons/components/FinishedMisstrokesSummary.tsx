@@ -4,7 +4,6 @@ import FinishedPossibleStrokeImprovements from "./FinishedPossibleStrokeImprovem
 type FinishedMisstrokesSummaryProps = {
   currentLessonStrokes: any;
   globalUserSettings: any;
-  metWords: any;
   path: string;
   reviseLesson: () => void;
   showMisstrokesSummary: boolean;
@@ -14,7 +13,6 @@ type FinishedMisstrokesSummaryProps = {
 const FinishedMisstrokesSummary = ({
   currentLessonStrokes,
   globalUserSettings,
-  metWords,
   path,
   reviseLesson,
   showMisstrokesSummary,
@@ -40,7 +38,6 @@ const FinishedMisstrokesSummary = ({
           <FinishedPossibleStrokeImprovements
             currentLessonStrokes={currentLessonStrokes}
             globalUserSettings={globalUserSettings}
-            metWords={metWords}
             updateRevisionMaterial={updateRevisionMaterial}
           />
         </ol>

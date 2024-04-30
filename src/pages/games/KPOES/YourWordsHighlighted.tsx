@@ -1,16 +1,18 @@
 import React from "react";
 
-import type { MetWords, UserSettings } from "../../../types";
+import type { UserSettings } from "../../../types";
+import { useAtomValue } from "jotai";
+import { metWordsState } from "../../../states/metWordsState";
 
 type Props = {
-  metWords: MetWords;
   yourWords: string;
   userSettings: UserSettings;
 };
 
 const whitespaceRegexWithCaptures = /(\s)/;
 
-const YourWordsHighlighted = ({ metWords, userSettings, yourWords }: Props) => {
+const YourWordsHighlighted = ({ userSettings, yourWords }: Props) => {
+  const metWords = useAtomValue(metWordsState);
   const result = yourWords
     .trim()
     .split(whitespaceRegexWithCaptures)

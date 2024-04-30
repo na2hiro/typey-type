@@ -4,10 +4,9 @@ import YourWordsHighlighted from "./YourWordsHighlighted";
 import Legend from "./Legend";
 import WordCount from "./WordCount";
 
-import type { MetWords, UserSettings } from "../../../types";
+import type { UserSettings } from "../../../types";
 
 type Props = {
-  metWords: MetWords;
   updateMultipleMetWords: (newMetWords: string[]) => void;
   userSettings: UserSettings;
 };
@@ -17,7 +16,6 @@ const timeStorageKey = "typey-KPOES-time";
 const fourHours = 1000 * 60 * 60 * 4;
 
 const YourWords = ({
-  metWords,
   updateMultipleMetWords,
   userSettings,
 }: Props) => {
@@ -87,7 +85,6 @@ const YourWords = ({
           >
             <YourWordsHighlighted
               yourWords={yourWords}
-              metWords={metWords}
               userSettings={userSettings}
             />
           </div>

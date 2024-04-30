@@ -9,6 +9,7 @@ import GameProgress from "../components/GameProgress";
 import LevelCompleted from "../utilities/LevelCompleted";
 import Puzzle from "./Puzzle";
 import { ReactComponent as RaverRobot } from "../../../images/RaverRobot.svg";
+import { useUpdateMetWords } from "../../../states/metWordsState";
 
 const gameName = "SHUFL";
 const introText =
@@ -18,8 +19,8 @@ export default function Game({
   globalLookupDictionary,
   globalLookupDictionaryLoaded,
   startingMetWordsToday,
-  updateMetWords,
 }) {
+  const updateMetWords = useUpdateMetWords();
   const [typedText, setTypedText] = useState("");
   const [previousCompletedPhraseAsTyped, setPreviousCompletedPhraseAsTyped] =
     useState("");

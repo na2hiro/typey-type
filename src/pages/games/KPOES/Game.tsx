@@ -9,14 +9,12 @@ import "./styles.scss";
 import type {
   FetchAndSetupGlobalDict,
   LookupDictWithNamespacedDictsAndConfig,
-  MetWords,
 } from "../../../types";
 
 type Props = {
   fetchAndSetupGlobalDict: FetchAndSetupGlobalDict;
   globalLookupDictionary: LookupDictWithNamespacedDictsAndConfig;
   globalLookupDictionaryLoaded: boolean;
-  metWords: MetWords;
   globalUserSettings: any;
   userSettings: any;
   updateMultipleMetWords: (newMetWords: string[]) => void;
@@ -30,7 +28,6 @@ export default function Game({
   fetchAndSetupGlobalDict,
   globalLookupDictionary,
   globalLookupDictionaryLoaded,
-  metWords,
   globalUserSettings,
   userSettings,
   updateMultipleMetWords,
@@ -55,7 +52,6 @@ export default function Game({
             />
             <Prompt />
             <WriteYourWords
-              metWords={metWords}
               updateMultipleMetWords={updateMultipleMetWords}
               userSettings={userSettings}
             />

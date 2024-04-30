@@ -107,7 +107,6 @@ const Template = (args) => {
       recentLessonHistory={recentLessonHistory}
       recommendationHistory={{ currentStep: "practice" }}
       recommendedNextLesson={recommendedNextLesson}
-      setPersonalPreferences={() => console.log("set value")}
       startingMetWordsToday={{}}
       updateFlashcardsRecommendation={() => console.log("set value")}
       updateRecommendationHistory={() => console.log("set value")}

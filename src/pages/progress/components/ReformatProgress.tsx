@@ -4,14 +4,16 @@ import formatSpacePlacementValue from "../utils/formatSpacePlacementValue";
 import makeDownloadHref from "../../../utils/makeDownloadHref";
 import trimAndSumUniqMetWords from "../../../utils/trimAndSumUniqMetWords";
 import formatProgressFileDownloadName from "../utils/formatProgressFileDownloadName";
-import type { MetWords, UserSettings } from "../../../types";
+import type { UserSettings } from "../../../types";
+import { useAtomValue } from "jotai";
+import { metWordsState } from "../../../states/metWordsState";
 
 type Props = {
-  metWords: MetWords;
   userSettings: UserSettings;
 };
 
-const ReformatProgress = ({ metWords, userSettings }: Props) => {
+const ReformatProgress = ({ userSettings }: Props) => {
+  const metWords = useAtomValue(metWordsState);
   const [reformattedProgress, setReformattedProgress] = useState({});
 
   const downloadReformattedProgressHref = useMemo(

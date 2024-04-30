@@ -8,7 +8,6 @@ import LessonOverview from "./LessonOverview";
 import LessonSubheader from "./components/LessonSubheader";
 import Finished from "./components/Finished";
 import Flashcards from "./flashcards/Flashcards";
-import { loadPersonalPreferences } from "../../utils/typey-type";
 import getLessonMetadata from "./utilities/getLessonMetadata";
 import MainLessonView from "./MainLessonView";
 import { LessonProps } from "./types";
@@ -16,6 +15,7 @@ import type { Lesson as LessonType } from "../../types";
 import Zipper from "../../utils/zipper";
 import { useAtomValue } from "jotai";
 import { userSettingsState } from "../../states/userSettingsState";
+import { metWordsState } from "../../states/metWordsState";
 
 const isCustom = (pathname: string) =>
   pathname === "/lessons/custom" || pathname === "/lessons/custom/setup";
@@ -76,7 +76,6 @@ const Lesson = ({
   lessonTitle,
   location,
   match,
-  metWords,
   personalDictionaries,
   previousCompletedPhraseAsTyped,
   recentLessonHistory,
@@ -114,6 +113,7 @@ const Lesson = ({
   updateTopSpeedPersonalBest,
 }: LessonProps) => {
   const userSettings = useAtomValue(userSettingsState);
+  const metWords = useAtomValue(metWordsState);
   const loadedLessonPath = useRef("");
 
   // const mainHeading = useRef<HTMLHeadingElement>(null);
@@ -138,26 +138,23 @@ const Lesson = ({
         !location.pathname.includes("/lessons/progress/seen/") &&
         !location.pathname.includes("/lessons/progress/memorised/")
       ) {
-        let loadedPersonalPreferences = loadPersonalPreferences();
         let newSeenOrMemorised = [false, true, true];
         setUpProgressRevisionLesson(
-          loadedPersonalPreferences[0],
+          metWords,
           userSettings,
           newSeenOrMemorised
         );
       } else if (location.pathname.startsWith("/lessons/progress/seen/")) {
-        let loadedPersonalPreferences = loadPersonalPreferences();
         let newSeenOrMemorised = [false, true, false];
         setUpProgressRevisionLesson(
-          loadedPersonalPreferences[0],
+          metWords,
           userSettings,
           newSeenOrMemorised
         );
       } else if (location.pathname.startsWith("/lessons/progress/memorised/")) {
-        let loadedPersonalPreferences = loadPersonalPreferences();
         let newSeenOrMemorised = [false, false, true];
         setUpProgressRevisionLesson(
-          loadedPersonalPreferences[0],
+          metWords,
           userSettings,
           newSeenOrMemorised
         );
@@ -364,7 +361,6 @@ const Lesson = ({
               lesson={lesson}
               lessonLength={propsLesson.presentedMaterial.length}
               lessonTitle={lessonTitle}
-              metWords={metWords}
               path={lesson?.path}
               restartLesson={restartLesson}
               reviseLesson={reviseLesson}

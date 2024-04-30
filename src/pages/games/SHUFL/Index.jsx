@@ -7,7 +7,6 @@ export default function Index({
   globalLookupDictionary,
   globalLookupDictionaryLoaded,
   startingMetWordsToday,
-  updateMetWords,
 }) {
   const mainHeading = useRef(null);
   useEffect(() => {
@@ -38,7 +37,6 @@ export default function Index({
           globalLookupDictionary={globalLookupDictionary}
           globalLookupDictionaryLoaded={globalLookupDictionaryLoaded}
           startingMetWordsToday={startingMetWordsToday}
-          updateMetWords={updateMetWords}
         />
       </div>
     </main>

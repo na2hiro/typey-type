@@ -70,7 +70,6 @@ export type LessonProps = {
   lessonTitle: PrettyLessonTitle;
   location: any;
   match: any;
-  metWords: MetWords;
   personalDictionaries: PersonalDictionaryNameAndContents[];
   previousCompletedPhraseAsTyped: string;
   recentLessonHistory: RecentLessonHistoryItem[];
@@ -132,7 +131,6 @@ export type FinishedProps = {
   lessonLength: number;
   lessonTitle: PrettyLessonTitle;
   metadata: any;
-  metWords: MetWords;
   path: any;
   restartLesson: any;
   reviseLesson: any;
