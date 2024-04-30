@@ -13,7 +13,6 @@ type Props = {
   globalLookupDictionaryLoaded: boolean;
   globalUserSettings: any;
   userSettings: any;
-  updateMultipleMetWords: (newMetWords: string[]) => void;
 };
 
 export default function Index({
@@ -22,7 +21,6 @@ export default function Index({
   globalLookupDictionaryLoaded,
   globalUserSettings,
   userSettings,
-  updateMultipleMetWords,
 }: Props) {
   const mainHeading = useRef<HTMLHeadingElement>(null);
 
@@ -53,7 +51,6 @@ export default function Index({
         globalLookupDictionaryLoaded={globalLookupDictionaryLoaded}
         globalUserSettings={globalUserSettings}
         userSettings={userSettings}
-        updateMultipleMetWords={updateMultipleMetWords}
       />
     </main>
   );

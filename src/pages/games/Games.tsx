@@ -64,7 +64,6 @@ type Props = {
   startingMetWordsToday: MetWords;
   globalUserSettings: GlobalUserSettings;
   userSettings: UserSettings;
-  updateMultipleMetWords: (newMetWords: string[]) => void;
 };
 
 const Games = ({
@@ -76,7 +75,6 @@ const Games = ({
   globalUserSettings,
   userSettings,
   startingMetWordsToday,
-  updateMultipleMetWords,
 }: Props) => {
   return (
     <Switch>
@@ -135,7 +133,6 @@ const Games = ({
               globalLookupDictionaryLoaded={globalLookupDictionaryLoaded}
               globalUserSettings={globalUserSettings}
               userSettings={userSettings}
-              updateMultipleMetWords={updateMultipleMetWords}
             />
           </ErrorBoundary>
         </DocumentTitle>

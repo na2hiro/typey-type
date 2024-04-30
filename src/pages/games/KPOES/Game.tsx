@@ -17,7 +17,6 @@ type Props = {
   globalLookupDictionaryLoaded: boolean;
   globalUserSettings: any;
   userSettings: any;
-  updateMultipleMetWords: (newMetWords: string[]) => void;
 };
 
 const gameName = "KPOES";
@@ -30,7 +29,6 @@ export default function Game({
   globalLookupDictionaryLoaded,
   globalUserSettings,
   userSettings,
-  updateMultipleMetWords,
 }: Props) {
   return (
     <div>
@@ -52,7 +50,6 @@ export default function Game({
             />
             <Prompt />
             <WriteYourWords
-              updateMultipleMetWords={updateMultipleMetWords}
               userSettings={userSettings}
             />
           </div>

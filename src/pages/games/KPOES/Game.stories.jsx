@@ -18,7 +18,6 @@ const Template = (args) => (
       metWords={{}}
       globalUserSettings={globalUserSettings}
       userSettings={userSettings}
-      updateMultipleMetWords={() => {}}
       {...args}
     />
   </div>

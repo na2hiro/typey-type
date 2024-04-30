@@ -160,7 +160,6 @@ const AppRoutes = ({ appProps, appState, appMethods }) => {
                         appState.globalLookupDictionaryLoaded
                       }
                       startingMetWordsToday={appState.startingMetWordsToday}
-                      updateMultipleMetWords={appMethods.updateMultipleMetWords}
                       globalUserSettings={appState.globalUserSettings}
                       userSettings={appState.userSettings}
                       {...props}

@@ -1,28 +1,27 @@
-import { writePersonalPreferences } from "../../../utils/typey-type";
+import { useAtom, useAtomValue } from "jotai";
+import { metWordsState } from "../../../states/metWordsState";
+import { userSettingsState } from "../../../states/userSettingsState";
 
-function updateMultipleMetWords(newMetWords: string[]) {
-  // @ts-ignore 'this' implicitly has type 'any' because it does not have a type annotation.
-  const newMetWordsState = Object.assign({}, this.state.metWords);
+export function useUpdateMultipleMetWords() {
+  const { spacePlacement } = useAtomValue(userSettingsState);
+  const [metWords, setMetWords] = useAtom(metWordsState);
 
-  for (const newMetWord of newMetWords) {
-    const phraseText =
-      // @ts-ignore 'this' implicitly has type 'any' because it does not have a type annotation.
-      this.state.userSettings.spacePlacement === "spaceBeforeOutput"
-        ? " " + newMetWord
-        : // @ts-ignore 'this' implicitly has type 'any' because it does not have a type annotation.
-        this.state.userSettings.spacePlacement === "spaceAfterOutput"
-        ? newMetWord + " "
-        : newMetWord;
-    const meetingsCount = newMetWordsState[phraseText] || 0;
-    newMetWordsState[phraseText] = meetingsCount + 1;
-  }
+  return (newMetWords: string[]) => {
+    const newMetWordsState = Object.assign({}, metWords);
 
-  // @ts-ignore 'this' implicitly has type 'any' because it does not have a type annotation.
-  this.setState({
-    metWords: newMetWordsState,
-  });
+    for (const newMetWord of newMetWords) {
+      const phraseText =
+        // @ts-ignore 'this' implicitly has type 'any' because it does not have a type annotation.
+        spacePlacement === "spaceBeforeOutput"
+          ? " " + newMetWord
+          : // @ts-ignore 'this' implicitly has type 'any' because it does not have a type annotation.
+          spacePlacement === "spaceAfterOutput"
+            ? newMetWord + " "
+            : newMetWord;
+      const meetingsCount = newMetWordsState[phraseText] || 0;
+      newMetWordsState[phraseText] = meetingsCount + 1;
+    }
 
-  writePersonalPreferences("metWords", newMetWordsState);
+    setMetWords(newMetWordsState);
+  };
 }
-
-export default updateMultipleMetWords;

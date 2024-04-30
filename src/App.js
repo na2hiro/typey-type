@@ -37,7 +37,6 @@ import Zipper from './utils/zipper';
 import generateCustomLesson from './pages/lessons/custom/generator/utilities/generateCustomLesson';
 import customiseLesson from './pages/lessons/utilities/customiseLesson';
 import setCustomLessonContent from './pages/lessons/utilities/setCustomLessonContent';
-import updateMultipleMetWords from './pages/games/KPOES/updateMultipleMetWords';
 import {
   changeShowStrokesAs,
   changeShowStrokesAsList,
@@ -1313,7 +1312,6 @@ class App extends Component {
               setCustomLessonContent: setCustomLessonContent.bind(this),
               customiseLesson: customiseLesson.bind(this),
               generateCustomLesson: generateCustomLesson.bind(this),
-              updateMultipleMetWords: updateMultipleMetWords.bind(this),
               changeFlashcardCourseLevel: changeFlashcardCourseLevel.bind(this),
               changeFullscreen: changeFullscreen.bind(this),
               changeShowStrokesAs: changeShowStrokesAs.bind(this),

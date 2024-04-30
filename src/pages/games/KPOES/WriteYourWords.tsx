@@ -5,9 +5,9 @@ import Legend from "./Legend";
 import WordCount from "./WordCount";
 
 import type { UserSettings } from "../../../types";
+import { useUpdateMultipleMetWords } from "./updateMultipleMetWords";
 
 type Props = {
-  updateMultipleMetWords: (newMetWords: string[]) => void;
   userSettings: UserSettings;
 };
 
@@ -16,9 +16,9 @@ const timeStorageKey = "typey-KPOES-time";
 const fourHours = 1000 * 60 * 60 * 4;
 
 const YourWords = ({
-  updateMultipleMetWords,
   userSettings,
 }: Props) => {
+  const updateMultipleMetWords = useUpdateMultipleMetWords();
   const [wordCount, setWordCount] = useState(0);
   const [yourWords, setYourWords] = useState("");
   const [done, setDone] = useState(false);
